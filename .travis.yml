@@ -58,6 +58,9 @@ before_script:
 - curl -LO "$PULSESTORM_PESTLE_URL/pestle.phar"
 - sudo mv pestle.phar /usr/local/bin
 - sudo chmod +x /usr/local/bin/pestle.phar
+# Copy integration settings
+- cp .travis/install-config-mysql.php magento2/dev/tests/integration/etc/install-config-mysql.php
+
 # install Magento
 - cd magento2
 - composer install --prefer-dist
@@ -71,6 +74,5 @@ before_script:
 - composer require vendic/magento2-vuestorefront-xmlsitemap:"^0.1.0-beta"
 
 script:
-- cp .travis/
-- cd ~/sites/magento2/dev/tests/integration
+- cd dev/tests/integration
 -  ../../../vendor/bin/phpunit -c phpunit.xml.dist ../../../vendor/Vendic
