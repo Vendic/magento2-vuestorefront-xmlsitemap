@@ -7,7 +7,6 @@ env:
   - PULSESTORM_MAGE2_ADMIN_USERNAME=admin
   - PULSESTORM_MAGE2_ADMIN_PASSWORD=ih3artmagento
   - PULSESTORM_MAGE2_ADMIN_DBNAME=magento_2_travis
-  - PULSESTORM_PESTLE_URL=http://pestle.pulsestorm.net
   - PULSESTORM_COMPOSER_REPOSITORY_TO_TEST=git@github.com:Vendic/magento2-vuestorefront-xmlsitemap.git
   - PULSESTORM_COMPOSER_PACKAGE_TO_TEST=vendic/magento2-vuestorefront-xmlsitemap
 addons:
@@ -51,10 +50,7 @@ before_script:
 
 # clone main magento github repository
 - git clone https://github.com/magento/magento2
-# download latest pestle phar and install
-- curl -LO "$PULSESTORM_PESTLE_URL/pestle.phar"
-- sudo mv pestle.phar /usr/local/bin
-- sudo chmod +x /usr/local/bin/pestle.phar
+
 # Copy integration settings
 - cp .travis/install-config-mysql.php magento2/dev/tests/integration/etc/install-config-mysql.php
 
@@ -70,7 +66,7 @@ before_script:
 # add composer package under test, composer require will trigger update/install
 # - composer require vendic/magento2-vuestorefront-xmlsitemap:"^0.1.0-beta"
 - sudo mkdir -p app/code/Vendic
-- git clone  git@github.com:Vendic/magento2-vuestorefront-xmlsitemap.git app/code/Vendic/VueStorefrontSitemap
+- sudo git clone  git@github.com:Vendic/magento2-vuestorefront-xmlsitemap.git app/code/Vendic/VueStorefrontSitemap
 
 script:
 - cd dev/tests/integration
