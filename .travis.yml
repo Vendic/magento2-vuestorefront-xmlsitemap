@@ -18,6 +18,9 @@ dist: trusty
 php:
 - 7.1
 - 7.2
+cache:
+  apt: true
+  directories: $HOME/.composer/cache
 before_script:
 - composer selfupdate
 - echo '' > ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
@@ -67,6 +70,10 @@ before_script:
 # - composer require vendic/magento2-vuestorefront-xmlsitemap:"^0.1.0-beta"
 - sudo mkdir -p app/code/Vendic
 - sudo git clone  git@github.com:Vendic/magento2-vuestorefront-xmlsitemap.git app/code/Vendic/VueStorefrontSitemap
+
+# Init dependencies
+- composer require evert/sitemap-php
+- composer require --dev tddwizard/magento2-fixtures
 
 script:
 - cd dev/tests/integration
