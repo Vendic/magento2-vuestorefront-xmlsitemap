@@ -33,23 +33,6 @@ before_script:
 - sudo apt-get -y -qq autoclean;
 - sudo apt-get install -y -qq mysql-server-5.6 mysql-client-5.6;
 - mysql -uroot -e 'SET @@global.sql_mode = NO_ENGINE_SUBSTITUTION; CREATE DATABASE magento_2_travis;';
-# add apache
-- sudo apt-get install -y -qq apache2 libapache2-mod-fastcgi
-#   enable php-fpm -- www.conf.default is PHP 7 only, so we dev/null any copy problems
-- sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/www.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/www.conf 2>/dev/null || true
-- sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
-- sudo a2enmod rewrite actions fastcgi alias
-- echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-- ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
-#   awful hack used during travis debugging that I swear I'm going to remove
-#   but then again you're reading this so I didn't remove it and **sigh**
-- sudo chmod 777 /home /home/travis /home/travis/build
-
-#   configure apache virtual hosts, assumes 000-default.conf is there
-- sudo cp -f .travis/travis-ci-apache /etc/apache2/sites-available/000-default.conf
-- sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default.conf
-# restart apache
-- sudo service apache2 restart
 
 # clone main magento github repository
 - git clone https://github.com/magento/magento2
