@@ -3,7 +3,9 @@ env:
   - VENDIC_VENDOR_DIR=app/code/Vendic
   - VENDIC_MODULE_NAME=VueStorefrontSitemap
   - VENDIC_GITHUB_HTTPS_URL=https://github.com/Vendic/magento2-vuestorefront-xmlsitemap.git
-  - VENIC_MAGENTO_MAJOR_VERSION=2.3
+  matrix:
+    - MAGENTO_MAJOR_VERSION=2.3
+    - MAGENTO_MAJOR_VERSION=2.2
 language: php
 sudo: required
 dist: trusty
@@ -30,7 +32,7 @@ before_script:
 - cp .travis/install-config-mysql.php magento2/dev/tests/integration/etc/install-config-mysql.php
 - cd magento2
 - composer install --prefer-dist
-- git checkout $VENIC_MAGENTO_MAJOR_VERSION
+- git checkout $MAGENTO_MAJOR_VERSION
 - if [ -n "$GH_TOKEN" ]; then composer config github-oauth.github.com ${GH_TOKEN}; fi;
 
 # Install module and dependencies
