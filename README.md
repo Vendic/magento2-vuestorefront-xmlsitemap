@@ -2,6 +2,7 @@
 [![Latest Stable Version](https://poser.pugx.org/vendic/magento2-vuestorefront-xmlsitemap/v/stable)](https://packagist.org/packages/vendic/magento2-vuestorefront-xmlsitemap)
 [![Latest Unstable Version](https://poser.pugx.org/vendic/magento2-vuestorefront-xmlsitemap/v/unstable)](https://packagist.org/packages/vendic/magento2-vuestorefront-xmlsitemap)
 [![License](https://poser.pugx.org/vendic/magento2-vuestorefront-xmlsitemap/license)](https://packagist.org/packages/vendic/magento2-vuestorefront-xmlsitemap)
+[![Build Status](https://travis-ci.org/Vendic/magento2-vuestorefront-xmlsitemap.svg?branch=master)](https://travis-ci.org/Vendic/magento2-vuestorefront-xmlsitemap)
 
 **Note: this package isn't production ready. Please test thoroughly before using in production** 
 

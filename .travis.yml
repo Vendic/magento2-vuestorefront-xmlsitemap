@@ -12,6 +12,10 @@ dist: trusty
 php:
 - 7.1
 - 7.2
+matrix:
+  exclude:
+  - php: 7.2
+    env: MAGENTO_MAJOR_VERSION=2.2
 cache:
   apt: true
   directories: $HOME/.composer/cache
