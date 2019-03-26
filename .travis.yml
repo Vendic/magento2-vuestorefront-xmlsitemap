@@ -9,6 +9,8 @@ env:
   - PULSESTORM_MAGE2_ADMIN_DBNAME=magento_2_travis
   - PULSESTORM_COMPOSER_REPOSITORY_TO_TEST=git@github.com:Vendic/magento2-vuestorefront-xmlsitemap.git
   - PULSESTORM_COMPOSER_PACKAGE_TO_TEST=vendic/magento2-vuestorefront-xmlsitemap
+  - VENDIC_VENDOR_DIR=app/code/Vendic
+  - VENDIC_MODULE_NAME=VueStorefrontSitemap
 addons:
   hosts:
   - magento-2-travis.dev
@@ -51,8 +53,8 @@ before_script:
 
 # add composer package under test, composer require will trigger update/install
 # - composer require vendic/magento2-vuestorefront-xmlsitemap:"^0.1.0-beta"
-- sudo mkdir -p app/code/Vendic
-- sudo git clone https://github.com/Vendic/magento2-vuestorefront-xmlsitemap.git app/code/Vendic/VueStorefrontSitemap
+- sudo mkdir -p $VENDIC_VENDOR_DIR
+- sudo git clone https://github.com/Vendic/magento2-vuestorefront-xmlsitemap.git $VENDIC_VENDOR_DIR/$VENDIC_MODULE_NAME
 
 # Init dependencies
 - composer require evert/sitemap-php
@@ -60,4 +62,4 @@ before_script:
 
 script:
 - cd dev/tests/integration
--  ../../../vendor/bin/phpunit -c phpunit.xml.dist ../../../app/code/Vendic/VueStorefrontSitemap
+-  ../../../vendor/bin/phpunit -c phpunit.xml.dist ../../../$VENDIC_VENDOR_DIR/$VENDIC_MODULE_NAME
