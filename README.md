@@ -4,17 +4,21 @@
 [![License](https://poser.pugx.org/vendic/magento2-vuestorefront-xmlsitemap/license)](https://packagist.org/packages/vendic/magento2-vuestorefront-xmlsitemap)
 [![Build Status](https://travis-ci.org/Vendic/magento2-vuestorefront-xmlsitemap.svg?branch=master)](https://travis-ci.org/Vendic/magento2-vuestorefront-xmlsitemap)
 
-**Note: this package isn't production ready. Please test thoroughly before using in production** 
-
 This modules generates a sitemap xml (via cron job, everyday at 00:00) for VueStorefront projects that are integrated with Magento 2. VueStorefront uses a special url structure, based on Magento 2 data:
 
-**Categories:**
+**Example category URL structure:**
 
 https://vuestorefronturl.com/urlkey-id
 
-**Products:**
+**Example product URL structure:**
 
 https://vuestorefronturl.com/sku/urlkey
+
+## Support
+
+Magento 2.2 | Magento 2.3
+--- | :---:
+:white_check_mark: | :white_check_mark:
 
 ## Installation
 ```
