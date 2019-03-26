@@ -1,6 +1,4 @@
 env:
-  #global environmental variables control magento install parameters
-  #see also hosts in addons.
   global:
   - PULSESTORM_MAGE2_FAKE_URL=http://magento-2-travis.dev
   - PULSESTORM_MAGE2_ADMIN_EMAIL=robert.hoffner@example.com
@@ -14,7 +12,6 @@ env:
   - PULSESTORM_COMPOSER_PACKAGE_TO_TEST=vendic/magento2-vuestorefront-xmlsitemap
 addons:
   hosts:
-  # should match PULSESTORM_MAGE2_FAKE_URL above
   - magento-2-travis.dev
 language: php
 sudo: required
@@ -71,8 +68,10 @@ before_script:
 - if [ -n "$GH_TOKEN" ]; then composer config github-oauth.github.com ${GH_TOKEN}; fi;
 
 # add composer package under test, composer require will trigger update/install
-- composer require vendic/magento2-vuestorefront-xmlsitemap:"^0.1.0-beta"
+# - composer require vendic/magento2-vuestorefront-xmlsitemap:"^0.1.0-beta"
+- sudo mkdir -p app/code/Vendic
+- git clone  git@github.com:Vendic/magento2-vuestorefront-xmlsitemap.git app/code/Vendic/VueStorefrontSitemap
 
 script:
 - cd dev/tests/integration
--  ../../../vendor/bin/phpunit -c phpunit.xml.dist ../../../vendor/Vendic
+-  ../../../vendor/bin/phpunit -c phpunit.xml.dist ../../../app/code/Vendic/VueStorefrontSitemap
