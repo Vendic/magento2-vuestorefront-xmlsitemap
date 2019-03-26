@@ -1,4 +1,6 @@
 # VueStorefront XML sitemap generator for Magento 2
+**Note: this package isn't production ready. Please test thoroughly before using in production** 
+
 This modules generates a sitemap xml for VueStorefront projects that are integrated with Magento 2. VueStorefront uses a special url structure, based on Magento 2 data:
 
 **Categories:**
