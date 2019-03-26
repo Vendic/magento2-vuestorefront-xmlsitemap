@@ -1,0 +1,24 @@
+{
+  "name": "vendic/magento2-vuestorefront-xmlsitemap",
+  "description": "Magento 2 sitemap.xml generator for VueStorefront",
+  "require": {
+    "php": "~7.1|~7.2",
+    "magento/magento2-base": "^2.2|^2.3",
+    "evert/sitemap-php": "^1.2"
+  },
+  "require-dev": {
+    "tddwizard/magento2-fixtures": "^0.8",
+    "phpunit/phpunit": "^6.0"
+  },
+  "type": "magento2-module",
+  "version": "0.1.0",
+  "license": "MIT",
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Vendic\\VueStorefrontSitemap\\": ""
+    }
+  }
+}
