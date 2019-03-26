@@ -4,9 +4,6 @@ env:
   - VENDIC_MODULE_NAME=VueStorefrontSitemap
   - VENDIC_GITHUB_HTTPS_URL=https://github.com/Vendic/magento2-vuestorefront-xmlsitemap.git
   - VENIC_MAGENTO_MAJOR_VERSION=2.3
-addons:
-  hosts:
-  - magento-2-travis.dev
 language: php
 sudo: required
 dist: trusty
