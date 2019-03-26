@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="vendic" translate="label" sortOrder="600">
+            <label>Vendic</label>
+        </tab>
+        <section id="vuestorefront"
+                 translate="label"
+                 type="text"
+                 sortOrder="1"
+                 showInDefault="1"
+                 showInWebsite="1"
+                 showInStore="1">
+            <label>VueStorefront</label>
+            <tab>vendic</tab>
+            <resource>Vendic_VueStorefrontSitemap::configuration</resource>
+            <group id="sitemap"
+                   translate="label"
+                   type="text"
+                   sortOrder="1"
+                   showInDefault="1"
+                   showInWebsite="1"
+                   showInStore="1">
+                <label>General</label>
+                <field id="vs_url"
+                       translate="label"
+                       type="text"
+                       sortOrder="1"
+                       showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1">
+                    <label>VueStorefront homepage url</label>
+                    <comment>Used for sitemap generation.</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
