@@ -41,6 +41,8 @@ class ProductCollection
     public function get()
     {
         $collection = $this->productCollectionFactory->create();
+        // We need to add store filters first to avoid an Zend_Db_Statement_Exception https://github.com/magento/magento2/issues/15187
+        $collection->addStoreFilter(1); // TODO make configurable
         $collection->addAttributeToSelect('url_key');
         $collection->addAttributeToFilter('status', ['in' => $this->productStatus->getVisibleStatusIds()]);
         $collection->setVisibility($this->productVisibility->getVisibleInSiteIds());
