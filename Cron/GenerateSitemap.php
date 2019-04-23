@@ -110,7 +110,7 @@ class GenerateSitemap
         if ($activeProducts->count() >= 1) {
             /** @var ProductInterface $product */
             foreach ($activeProducts->getItems() as $product) {
-                $productUrl = '/' . $product->getSku() . '/' . $product->getUrlKey();
+                $productUrl = $this->generateProductSitemapUrl($product);
                 $this->sitemap->addItem(
                     $productUrl,
                     1.0,
@@ -127,7 +127,7 @@ class GenerateSitemap
         if ($activeCategories->count() >= 1) {
             /** @var CategoryInterface $category */
             foreach ($activeCategories->getItems() as $category) {
-                $categoryUrl = '/' . $category->getUrlKey() . '-' . $category->getId();
+                $categoryUrl = $this->generateSitemapCategoryUrl($category);
                 $this->sitemap->addItem(
                     $categoryUrl,
                     1.0,
@@ -143,5 +143,34 @@ class GenerateSitemap
         $this->sitemap->addItem(
             '/'
         );
+    }
+
+    /**
+     * @param $product
+     * @return string
+     */
+    protected function generateProductSitemapUrl(ProductInterface $product): string
+    {
+        $prefix = '';
+        if(!$this->configuration->getShortCatalogUrlsEnabled()) {
+            $prefix = 'p/';
+        }
+        $url = '/' . $prefix . $product->getSku() . '/' . $product->getUrlKey();
+        return $url;
+    }
+
+    /**
+     * @param $category
+     * @return string
+     */
+    protected function generateSitemapCategoryUrl(CategoryInterface $category): string
+    {
+        $prefix = '';
+        if(!$this->configuration->getShortCatalogUrlsEnabled()) {
+            $prefix = 'c/';
+        }
+        // TODO make category ID suffix cusutomizable via Magento 2 settings
+        $url = '/' . $prefix . $category->getUrlKey();
+        return $url;
     }
 }

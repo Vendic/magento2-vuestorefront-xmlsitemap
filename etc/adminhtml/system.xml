@@ -33,6 +33,17 @@
                     <label>VueStorefront homepage url</label>
                     <comment>Used for sitemap generation.</comment>
                 </field>
+                <field id="use_catalog_short_urls"
+                       translate="label"
+                       type="select"
+                       sortOrder="1"
+                       showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1">
+                    <label>Use catalog_short_urls</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>When this option is set to true, Vue Storefront will use the alternative routing for products and categories - without the /p/ and /c/ prefixes. </comment>
+                </field>
             </group>
         </section>
     </system>

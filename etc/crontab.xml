@@ -4,7 +4,7 @@
     <group id="default">
         <job name="vs_sitemap_generation" instance="Vendic\VueStorefrontSitemap\Cron\GenerateSitemap"
              method="execute">
-            <schedule>0 0 * * *</schedule>
+            <schedule>5 0 * * *</schedule>
         </job>
     </group>
 </config>
