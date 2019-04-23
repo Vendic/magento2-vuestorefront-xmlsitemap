@@ -70,7 +70,7 @@ final class SitemapGeneratedTest extends TestCase
      * @magentoConfigFixture current_store vuestorefront/sitemap/use_catalog_short_urls 0
      * @magentoDataFixtureBeforeTransaction createFixture
      */
-    public function testFileGeneration()
+    public function testFileGenerationsWithShortCatalogUrlsDisabled()
     {
         // Action
         $this->generateSitemap();
@@ -78,7 +78,30 @@ final class SitemapGeneratedTest extends TestCase
         // Get results
         $fileAbsolutePath = $this->getSitemapPath();
         $actualContent = file_get_contents($fileAbsolutePath);
-        $expectedContent = $this->expectedSitemapContent();
+        $expectedContent = $this->expectedSitemapContentLongUrls();
+
+        // Cleanup
+        $this->removeFile($fileAbsolutePath);
+
+        // Assertions
+        $this->assertSame($expectedContent, $actualContent);
+        $this->assertFalse(file_exists($fileAbsolutePath));
+    }
+
+    /**
+     * @magentoConfigFixture current_store vuestorefront/sitemap/vs_url https://www.vendic.nl
+     * @magentoConfigFixture current_store vuestorefront/sitemap/use_catalog_short_urls 1
+     * @magentoDataFixtureBeforeTransaction createFixture
+     */
+    public function testFileGenerationsWithShortCatalogUrlsEnabled()
+    {
+        // Action
+        $this->generateSitemap();
+
+        // Get results
+        $fileAbsolutePath = $this->getSitemapPath();
+        $actualContent = file_get_contents($fileAbsolutePath);
+        $expectedContent = $this->expectedSitemapContentShortUrls();
 
         // Cleanup
         $this->removeFile($fileAbsolutePath);
@@ -142,7 +165,7 @@ final class SitemapGeneratedTest extends TestCase
     /**
      * @return string
      */
-    private function expectedSitemapContent(): string
+    private function expectedSitemapContentLongUrls(): string
     {
         $today = date('Y-m-d');
 
@@ -162,6 +185,38 @@ final class SitemapGeneratedTest extends TestCase
  </url>
  <url>
   <loc>https://www.vendic.nl/p/TEST123/test123</loc>
+  <priority>1</priority>
+  <changefreq>daily</changefreq>
+  <lastmod>$today</lastmod>
+ </url>
+</urlset>
+
+XML;
+    }
+
+    /**
+     * @return string
+     */
+    private function expectedSitemapContentShortUrls(): string
+    {
+        $today = date('Y-m-d');
+
+        return
+            <<<XML
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+ <url>
+  <loc>https://www.vendic.nl/</loc>
+  <priority>0.5</priority>
+ </url>
+ <url>
+  <loc>https://www.vendic.nl/test-category</loc>
+  <priority>1</priority>
+  <changefreq>daily</changefreq>
+  <lastmod>$today</lastmod>
+ </url>
+ <url>
+  <loc>https://www.vendic.nl/TEST123/test123</loc>
   <priority>1</priority>
   <changefreq>daily</changefreq>
   <lastmod>$today</lastmod>
