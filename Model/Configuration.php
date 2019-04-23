@@ -14,6 +14,7 @@ use Magento\Framework\Exception\LocalizedException;
 class Configuration
 {
     const VUE_STOREFRONT_URL_CONFIG_PATH = 'vuestorefront/sitemap/vs_url';
+    const VUE_STOREFRONT_SHORT_CATALOG_ENABLED = 'vuestorefront/sitemap/use_catalog_short_urls';
 
     /**
      * @var ScopeConfigInterface
@@ -38,5 +39,14 @@ class Configuration
             );
         }
         return $url;
+    }
+
+    public function getShortCatalogUrlsEnabled(): bool
+    {
+        $setting = $this->scopeConfig->getValue(
+            self::VUE_STOREFRONT_SHORT_CATALOG_ENABLED,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
+        return (bool) $setting;
     }
 }

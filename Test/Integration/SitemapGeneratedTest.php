@@ -67,6 +67,7 @@ final class SitemapGeneratedTest extends TestCase
 
     /**
      * @magentoConfigFixture current_store vuestorefront/sitemap/vs_url https://www.vendic.nl
+     * @magentoConfigFixture current_store vuestorefront/sitemap/use_catalog_short_urls 0
      * @magentoDataFixtureBeforeTransaction createFixture
      */
     public function testFileGeneration()
@@ -144,7 +145,6 @@ final class SitemapGeneratedTest extends TestCase
     private function expectedSitemapContent(): string
     {
         $today = date('Y-m-d');
-        $categoryId = self::$categoryFixture->getId();
 
         return
             <<<XML
@@ -155,13 +155,13 @@ final class SitemapGeneratedTest extends TestCase
   <priority>0.5</priority>
  </url>
  <url>
-  <loc>https://www.vendic.nl/test-category-$categoryId</loc>
+  <loc>https://www.vendic.nl/c/test-category</loc>
   <priority>1</priority>
   <changefreq>daily</changefreq>
   <lastmod>$today</lastmod>
  </url>
  <url>
-  <loc>https://www.vendic.nl/TEST123/test123</loc>
+  <loc>https://www.vendic.nl/p/TEST123/test123</loc>
   <priority>1</priority>
   <changefreq>daily</changefreq>
   <lastmod>$today</lastmod>
