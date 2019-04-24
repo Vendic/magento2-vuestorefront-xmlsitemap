@@ -15,6 +15,7 @@ class Configuration
 {
     const VUE_STOREFRONT_URL_CONFIG_PATH = 'vuestorefront/sitemap/vs_url';
     const VUE_STOREFRONT_SHORT_CATALOG_ENABLED = 'vuestorefront/sitemap/use_catalog_short_urls';
+    const VUE_STOREFRONT_CATEGORY_ID_SUFFIX_ENABLED = 'vuestorefront/sitemap/category_id_suffix';
 
     /**
      * @var ScopeConfigInterface
@@ -45,6 +46,15 @@ class Configuration
     {
         $setting = $this->scopeConfig->getValue(
             self::VUE_STOREFRONT_SHORT_CATALOG_ENABLED,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
+        return (bool) $setting;
+    }
+
+    public function getCategoryIdSuffixEnabled(): bool
+    {
+        $setting = $this->scopeConfig->getValue(
+            self::VUE_STOREFRONT_CATEGORY_ID_SUFFIX_ENABLED,
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE
         );
         return (bool) $setting;

@@ -169,8 +169,12 @@ class GenerateSitemap
         if(!$this->configuration->getShortCatalogUrlsEnabled()) {
             $prefix = 'c/';
         }
-        // TODO make category ID suffix cusutomizable via Magento 2 settings
         $url = '/' . $prefix . $category->getUrlKey();
+
+        if($this->configuration->getCategoryIdSuffixEnabled()) {
+            $url = $url . '-' . $category->getId();
+        }
+
         return $url;
     }
 }
