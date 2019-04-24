@@ -44,6 +44,17 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>When this option is set to true, Vue Storefront will use the alternative routing for products and categories - without the /p/ and /c/ prefixes. </comment>
                 </field>
+                <field id="category_id_suffix"
+                       translate="label"
+                       type="select"
+                       sortOrder="1"
+                       showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1">
+                    <label>Enable category ID suffix</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>When this option is set to true, category ID's will be added to the category urls in the sitemap</comment>
+                </field>
             </group>
         </section>
     </system>

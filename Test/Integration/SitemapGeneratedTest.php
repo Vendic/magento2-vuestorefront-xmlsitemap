@@ -68,6 +68,7 @@ final class SitemapGeneratedTest extends TestCase
     /**
      * @magentoConfigFixture current_store vuestorefront/sitemap/vs_url https://www.vendic.nl
      * @magentoConfigFixture current_store vuestorefront/sitemap/use_catalog_short_urls 0
+     * @magentoConfigFixture current_store vuestorefront/sitemap/category_id_suffix 0
      * @magentoDataFixtureBeforeTransaction createFixture
      */
     public function testFileGenerationsWithShortCatalogUrlsDisabled()
@@ -80,17 +81,13 @@ final class SitemapGeneratedTest extends TestCase
         $actualContent = file_get_contents($fileAbsolutePath);
         $expectedContent = $this->expectedSitemapContentLongUrls();
 
-        // Cleanup
-        $this->removeFile($fileAbsolutePath);
-
-        // Assertions
-        $this->assertSame($expectedContent, $actualContent);
-        $this->assertFalse(file_exists($fileAbsolutePath));
+        $this->assertSameAndRemoveFile($fileAbsolutePath, $expectedContent, $actualContent);
     }
 
     /**
      * @magentoConfigFixture current_store vuestorefront/sitemap/vs_url https://www.vendic.nl
      * @magentoConfigFixture current_store vuestorefront/sitemap/use_catalog_short_urls 1
+     * @magentoConfigFixture current_store vuestorefront/sitemap/category_id_suffix 0
      * @magentoDataFixtureBeforeTransaction createFixture
      */
     public function testFileGenerationsWithShortCatalogUrlsEnabled()
@@ -103,12 +100,26 @@ final class SitemapGeneratedTest extends TestCase
         $actualContent = file_get_contents($fileAbsolutePath);
         $expectedContent = $this->expectedSitemapContentShortUrls();
 
-        // Cleanup
-        $this->removeFile($fileAbsolutePath);
+        $this->assertSameAndRemoveFile($fileAbsolutePath, $expectedContent, $actualContent);
+    }
 
-        // Assertions
-        $this->assertSame($expectedContent, $actualContent);
-        $this->assertFalse(file_exists($fileAbsolutePath));
+    /**
+     * @magentoConfigFixture current_store vuestorefront/sitemap/vs_url https://www.vendic.nl
+     * @magentoConfigFixture current_store vuestorefront/sitemap/use_catalog_short_urls 0
+     * @magentoConfigFixture current_store vuestorefront/sitemap/category_id_suffix 1
+     * @magentoDataFixtureBeforeTransaction createFixture
+     */
+    public function testFileGenerationWithCategoryIdSuffix()
+    {
+        // Action
+        $this->generateSitemap();
+
+        // Get results
+        $fileAbsolutePath = $this->getSitemapPath();
+        $actualContent = file_get_contents($fileAbsolutePath);
+        $expectedContent = $this->expectedSitemapContentWithSuffixEnabled();
+
+        $this->assertSameAndRemoveFile($fileAbsolutePath, $expectedContent, $actualContent);
     }
 
     private function generateSitemap(): void
@@ -153,6 +164,18 @@ final class SitemapGeneratedTest extends TestCase
                 ->withUrlKey('test-category')
                 ->build()
         );
+    }
+
+    /**
+     * @param $fileAbsolutePath
+     * @param $expectedContent
+     * @param $actualContent
+     */
+    protected function assertSameAndRemoveFile($fileAbsolutePath, $expectedContent, $actualContent): void
+    {
+        $this->removeFile($fileAbsolutePath);
+        $this->assertSame($expectedContent, $actualContent);
+        $this->assertFalse(file_exists($fileAbsolutePath));
     }
 
     public static function createFixtureRollback()
@@ -217,6 +240,37 @@ XML;
  </url>
  <url>
   <loc>https://www.vendic.nl/TEST123/test123</loc>
+  <priority>1</priority>
+  <changefreq>daily</changefreq>
+  <lastmod>$today</lastmod>
+ </url>
+</urlset>
+
+XML;
+    }
+
+
+    private function expectedSitemapContentWithSuffixEnabled()
+    {
+        $today = date('Y-m-d');
+        $categoryId = self::$categoryFixture->getId();
+
+        return
+            <<<XML
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+ <url>
+  <loc>https://www.vendic.nl/</loc>
+  <priority>0.5</priority>
+ </url>
+ <url>
+  <loc>https://www.vendic.nl/c/test-category-$categoryId</loc>
+  <priority>1</priority>
+  <changefreq>daily</changefreq>
+  <lastmod>$today</lastmod>
+ </url>
+ <url>
+  <loc>https://www.vendic.nl/p/TEST123/test123</loc>
   <priority>1</priority>
   <changefreq>daily</changefreq>
   <lastmod>$today</lastmod>
