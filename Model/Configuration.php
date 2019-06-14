@@ -17,6 +17,11 @@ class Configuration
     const VUE_STOREFRONT_SHORT_CATALOG_ENABLED = 'vuestorefront/sitemap/use_catalog_short_urls';
     const VUE_STOREFRONT_CATEGORY_ID_SUFFIX_ENABLED = 'vuestorefront/sitemap/category_id_suffix';
 
+    const VUE_STOREFRONT_EXCLUDE_PRODUCT_SKUS_ENABLED = 'vuestorefront/sitemap/exclude_product_skus';
+    const VUE_STOREFRONT_SITEMAP_FOLDER = 'vuestorefront/sitemap/sitemap_folder';
+
+    const VUE_STOREFRONT_CATEOGRY_URL_PATH_ENABLED = 'vuestorefront/sitemap/category_url_path';
+
     /**
      * @var ScopeConfigInterface
      */
@@ -55,6 +60,36 @@ class Configuration
     {
         $setting = $this->scopeConfig->getValue(
             self::VUE_STOREFRONT_CATEGORY_ID_SUFFIX_ENABLED,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
+        return (bool) $setting;
+    }
+
+    public function getExcludeProductSkusEnabled(): bool
+    {
+        $setting = $this->scopeConfig->getValue(
+            self::VUE_STOREFRONT_EXCLUDE_PRODUCT_SKUS_ENABLED,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
+        return (bool) $setting;
+    }
+
+    public function getVueStorefrontSitemapFolder(): string
+    {
+        $folder = '/' . $this->scopeConfig->getValue(
+            self::VUE_STOREFRONT_SITEMAP_FOLDER,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        ) . '/';
+        if (!is_string($folder)) {
+            $folder = '/';
+        }
+        return $folder;
+    }
+
+    public function getVueStorefrontCategoryUrlPath(): bool
+    {
+        $setting = $this->scopeConfig->getValue(
+            self::VUE_STOREFRONT_CATEOGRY_URL_PATH_ENABLED,
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE
         );
         return (bool) $setting;

@@ -4,7 +4,7 @@
 [![License](https://poser.pugx.org/vendic/magento2-vuestorefront-xmlsitemap/license)](https://packagist.org/packages/vendic/magento2-vuestorefront-xmlsitemap)
 [![Build Status](https://travis-ci.org/Vendic/magento2-vuestorefront-xmlsitemap.svg?branch=master)](https://travis-ci.org/Vendic/magento2-vuestorefront-xmlsitemap)
 
-This modules generates a sitemap xml (via cron job, everyday at 00:00) for VueStorefront projects that are integrated with Magento 2. VueStorefront uses a special url structure, based on Magento 2 data:
+This modules generates a sitemap xml (via cron job, everyday at 00:00) for VueStorefront projects that are integrated with Magento 2. Also adds a cli command `bin/magento vsf:sitemap:generate` to manually generate a sitemap. VueStorefront uses a special url structure, based on Magento 2 data:
 
 **Example category URL structure:**
 
@@ -13,6 +13,14 @@ https://vuestorefronturl.com/urlkey-id
 **Example product URL structure:**
 
 https://vuestorefronturl.com/sku/urlkey
+
+**Example VueStorefront 1.9 category URL structure:**
+
+https://vuestorefronturl.com/urlpath
+
+**Example VueStorefront 1.9 product URL structure:**
+
+https://vuestorefronturl.com/urlkey
 
 ## Support
 

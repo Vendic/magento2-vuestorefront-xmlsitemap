@@ -1,59 +1,42 @@
 <?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
         <tab id="vendic" translate="label" sortOrder="600">
             <label>Vendic</label>
         </tab>
-        <section id="vuestorefront"
-                 translate="label"
-                 type="text"
-                 sortOrder="1"
-                 showInDefault="1"
-                 showInWebsite="1"
-                 showInStore="1">
+        <section id="vuestorefront" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>VueStorefront</label>
             <tab>vendic</tab>
             <resource>Vendic_VueStorefrontSitemap::configuration</resource>
-            <group id="sitemap"
-                   translate="label"
-                   type="text"
-                   sortOrder="1"
-                   showInDefault="1"
-                   showInWebsite="1"
-                   showInStore="1">
+            <group id="sitemap" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>General</label>
-                <field id="vs_url"
-                       translate="label"
-                       type="text"
-                       sortOrder="1"
-                       showInDefault="1"
-                       showInWebsite="1"
-                       showInStore="1">
+                <field id="vs_url" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>VueStorefront homepage url</label>
                     <comment>Used for sitemap generation.</comment>
                 </field>
-                <field id="use_catalog_short_urls"
-                       translate="label"
-                       type="select"
-                       sortOrder="1"
-                       showInDefault="1"
-                       showInWebsite="1"
-                       showInStore="1">
+                <field id="sitemap_folder" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Location to generate sitemap</label>
+                    <comment>Path in /pub/</comment>
+                </field>
+                <field id="use_catalog_short_urls" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Use catalog_short_urls</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>When this option is set to true, Vue Storefront will use the alternative routing for products and categories - without the /p/ and /c/ prefixes. </comment>
+                    <comment>When this option is set to true, Vue Storefront will use the alternative routing for products and categories - without the /p/ and /c/ prefixes. Turn on for VSF 1.9</comment>
                 </field>
-                <field id="category_id_suffix"
-                       translate="label"
-                       type="select"
-                       sortOrder="1"
-                       showInDefault="1"
-                       showInWebsite="1"
-                       showInStore="1">
+                <field id="category_id_suffix" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Enable category ID suffix</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>When this option is set to true, category ID's will be added to the category urls in the sitemap</comment>
+                    <comment>When this option is set to true, category ID's will be added to the category urls in the sitemap. Turn off for VSF 1.9 </comment>
+                </field>
+                <field id="exclude_product_skus" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Exclude Product Skus from Products</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>When this option is set to true, products skus will be removed. Useful for new VSF 1.9 url schemes</comment>
+                </field>
+                <field id="category_url_path" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use Category URL Path instead of URL Key</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Useful for new VSF 1.9 url schemes</comment>
                 </field>
             </group>
         </section>

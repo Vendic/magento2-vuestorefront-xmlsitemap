@@ -85,7 +85,7 @@ class GenerateSitemap
      */
     private function getPubPath() : string
     {
-        return $this->directoryList->getPath('pub') . '/';
+        return $this->directoryList->getPath('pub') . $this->configuration->getVueStorefrontSitemapFolder();
     }
 
     /**
@@ -152,10 +152,14 @@ class GenerateSitemap
     protected function generateProductSitemapUrl(ProductInterface $product): string
     {
         $prefix = '';
-        if(!$this->configuration->getShortCatalogUrlsEnabled()) {
+        if (!$this->configuration->getShortCatalogUrlsEnabled()) {
             $prefix = 'p/';
         }
-        $url = '/' . $prefix . $product->getSku() . '/' . $product->getUrlKey();
+        if (!$this->configuration->getExcludeProductSkusEnabled()) {
+            $url = '/' . $prefix . $product->getSku() . '/' . $product->getUrlKey();
+        } else {
+            $url = '/' . $prefix . $product->getUrlKey();
+        }
         return $url;
     }
 
@@ -166,12 +170,15 @@ class GenerateSitemap
     protected function generateSitemapCategoryUrl(CategoryInterface $category): string
     {
         $prefix = '';
-        if(!$this->configuration->getShortCatalogUrlsEnabled()) {
+        if (!$this->configuration->getShortCatalogUrlsEnabled()) {
             $prefix = 'c/';
         }
-        $url = '/' . $prefix . $category->getUrlKey();
-
-        if($this->configuration->getCategoryIdSuffixEnabled()) {
+        if ($this->configuration->getVueStorefrontCategoryUrlPath()) {
+            $url = '/' . $prefix . $category->getUrlPath();
+        } else {
+            $url = '/' . $prefix . $category->getUrlKey();
+        }
+        if ($this->configuration->getCategoryIdSuffixEnabled()) {
             $url = $url . '-' . $category->getId();
         }
 
