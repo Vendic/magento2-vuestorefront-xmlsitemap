@@ -35,10 +35,8 @@ class CategoryCollection
         ->addFieldToSelect('url_path')
         ->addFieldToFilter('url_path', ['neq' => null])
         ->addFieldToSelect('is_active')
-        ->addFieldToSelect('include_in_menu')
         ->addFieldToSelect('level')
         ->addFieldToFilter('is_active', ['eq' => 1])
-        ->addFieldToFilter('include_in_menu', ['eq' => 1])
         ->addFieldToFilter('level', ['gt' => 1]);
 
         return $collection;
