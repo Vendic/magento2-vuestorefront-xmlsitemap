@@ -28,10 +28,16 @@ class CategoryCollection
      */
     public function get()
     {
-        $collection = $this->collectionFactory->create();
-        $collection->addFieldToSelect('url_key');
-        $collection->addFieldToSelect('level');
-        $collection->addFieldToFilter('url_key', ['neq' => null]);
+        $collection = $this->collectionFactory
+        ->create()
+        ->addFieldToSelect('url_key')
+        ->addFieldToFilter('url_key', ['neq' => null])
+        ->addFieldToSelect('url_path')
+        ->addFieldToFilter('url_path', ['neq' => null])
+        ->addFieldToSelect('is_active')
+        ->addFieldToSelect('level')
+        ->addFieldToFilter('is_active', ['eq' => 1])
+        ->addFieldToFilter('level', ['gt' => 1]);
 
         return $collection;
     }
