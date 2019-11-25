@@ -64,6 +64,7 @@ class GenerateSitemap
     {
         // Collect settings
         $domain = $this->configuration->getVueStorefrontUrl();
+        $domain = $this->appendSlash($domain);
         $path = $this->getPubPath();
 
         // Sitemap configuration
@@ -141,7 +142,7 @@ class GenerateSitemap
     protected function addHomepageToSitemap() : void
     {
         $this->sitemap->addItem(
-            '/'
+            ''
         );
     }
 
@@ -156,9 +157,9 @@ class GenerateSitemap
             $prefix = 'p/';
         }
         if (!$this->configuration->getExcludeProductSkusEnabled()) {
-            $url = '/' . $prefix . $product->getSku() . '/' . $product->getUrlKey();
+            $url = $prefix . $product->getSku() . '/' . $product->getUrlKey();
         } else {
-            $url = '/' . $prefix . $product->getUrlKey();
+            $url = $prefix . $product->getUrlKey();
         }
         return $url;
     }
@@ -174,9 +175,9 @@ class GenerateSitemap
             $prefix = 'c/';
         }
         if ($this->configuration->getVueStorefrontCategoryUrlPath()) {
-            $url = '/' . $prefix . $category->getUrlPath();
+            $url = $prefix . $category->getUrlPath();
         } else {
-            $url = '/' . $prefix . $category->getUrlKey();
+            $url = $prefix . $category->getUrlKey();
         }
         if ($this->configuration->getCategoryIdSuffixEnabled()) {
             $url = $url . '-' . $category->getId();
@@ -184,4 +185,13 @@ class GenerateSitemap
 
         return $url;
     }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    protected function appendSlash(string $value): string {
+        return rtrim($value, '/') . '/';
+    }
+
 }
