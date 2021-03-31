@@ -30,7 +30,7 @@ Magento 2.2 | Magento 2.3
 
 ## Installation
 ```
-composer require composer require vendic/magento2-vuestorefront-xmlsitemap
+composer require vendic/magento2-vuestorefront-xmlsitemap
 ```
 
 Go to system configuration:
