@@ -16,6 +16,7 @@ use Vendic\VueStorefrontSitemap\Model\CategoryCollection;
 use Vendic\VueStorefrontSitemap\Model\Configuration;
 use Vendic\VueStorefrontSitemap\Model\ProductCollection;
 use Vendic\VueStorefrontSitemap\Model\SitemapFactory;
+use Magento\Framework\Filesystem\Driver\File;
 
 class GenerateSitemap
 {
@@ -45,19 +46,25 @@ class GenerateSitemap
      * @var CategoryCollection
      */
     protected $categoryCollection;
+    /**
+     * @var File
+     */
+    protected $fileDriver;
 
     public function __construct(
         CategoryCollection $categoryCollection,
         Configuration $configuration,
         ProductCollection $productCollection,
         DirectoryList $directoryList,
-        SitemapFactory $sitemapFactory
+        SitemapFactory $sitemapFactory,
+        File $fileDriver
     ) {
         $this->directoryList = $directoryList;
         $this->sitemapFactory = $sitemapFactory;
         $this->productCollection = $productCollection;
         $this->configuration = $configuration;
         $this->categoryCollection = $categoryCollection;
+        $this->fileDriver = $fileDriver;        
     }
 
     public function execute() : void
@@ -66,6 +73,9 @@ class GenerateSitemap
         $domain = $this->configuration->getVueStorefrontUrl();
         $path = $this->getPubPath();
 
+        // Create directory at Path if doesn't exists
+        if (!$this->fileDriver->isDirectory($path)) $this->fileDriver->createDirectory($path, 0775);
+        
         // Sitemap configuration
         $this->sitemap = $this->sitemapFactory->create($domain);
         $this->sitemap->setPath($path);
