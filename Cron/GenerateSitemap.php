@@ -66,6 +66,11 @@ class GenerateSitemap
         $domain = $this->configuration->getVueStorefrontUrl();
         $path = $this->getPubPath();
 
+        // Create directory at Path if doesn't exists
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
+        
         // Sitemap configuration
         $this->sitemap = $this->sitemapFactory->create($domain);
         $this->sitemap->setPath($path);
