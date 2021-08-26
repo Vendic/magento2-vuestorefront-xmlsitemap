@@ -65,8 +65,8 @@ class GenerateSitemap
         $this->productCollection = $productCollection;
         $this->configuration = $configuration;
         $this->categoryCollection = $categoryCollection;
-        $this->fileDriver                   = $fileDriver;
-        $this->getAppConfigScopeConfig        = $appConfigScopeConfig;
+        $this->fileDriver = $fileDriver;
+        $this->getAppConfigScopeConfig = $appConfigScopeConfig;
     }
 
     public function execute() : void
