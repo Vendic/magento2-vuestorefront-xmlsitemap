@@ -66,7 +66,7 @@ class GenerateSitemap
         $this->configuration = $configuration;
         $this->categoryCollection = $categoryCollection;
         $this->fileDriver                   = $fileDriver;
-        $this->_appConfigScopeConfig        = $appConfigScopeConfig;
+        $this->getAppConfigScopeConfig        = $appConfigScopeConfig;
     }
 
     public function execute() : void
@@ -119,7 +119,7 @@ class GenerateSitemap
     protected function addProductsToSitemap(): void
     {
         $activeProducts = $this->getActiveProducts();
-        $productUrlSuffix = $this->_appConfigScopeConfig->getValue('catalog/seo/product_url_suffix');
+        $productUrlSuffix = $this->getAppConfigScopeConfig->getValue('catalog/seo/product_url_suffix');
         if ($activeProducts->count() >= 1) {
             /** @var ProductInterface $product */
             foreach ($activeProducts->getItems() as $product) {
@@ -137,7 +137,7 @@ class GenerateSitemap
     protected function addCategoriesToSitemap(): void
     {
         $activeCategories = $this->getActiveCategories();
-        $categoryUrlSuffix = $this->_appConfigScopeConfig->getValue('catalog/seo/category_url_suffix');
+        $categoryUrlSuffix = $this->getAppConfigScopeConfig->getValue('catalog/seo/category_url_suffix');
         if ($activeCategories->count() >= 1) {
             /** @var CategoryInterface $category */
             foreach ($activeCategories->getItems() as $category) {
