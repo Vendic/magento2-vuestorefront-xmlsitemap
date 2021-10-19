@@ -13,10 +13,14 @@ class RunGenerateSitemap extends Command
      */
     protected $generateSitemapCron;
 
+    protected $state;
+
     public function __construct(
+        \Magento\Framework\App\State $state,
         GenerateSitemap $generateSitemapCron
     ) {
         $this->generateSitemapCron = $generateSitemapCron;
+        $this->state = $state;
         parent::__construct();
     }
     protected function configure()
@@ -28,7 +32,7 @@ class RunGenerateSitemap extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         try {
-            $this->generateSitemapCron->execute();
+            $this->state->emulateAreaCode(\Magento\Framework\App\Area::AREA_FRONTEND, [$this->generateSitemapCron, 'execute']);
             $output->writeln("VSF Sitemap Generated");
         } catch (\Exception $e) {
             $output->writeln($e->getMessage());

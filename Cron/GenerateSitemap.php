@@ -11,6 +11,8 @@ namespace Vendic\VueStorefrontSitemap\Cron;
 use Magento\Catalog\Api\Data\CategoryInterface;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Framework\App\Filesystem\DirectoryList;
+use Magento\Store\Model\App\Emulation;
+use Magento\Store\Model\StoreManagerInterface;
 use SitemapPHP\Sitemap;
 use Vendic\VueStorefrontSitemap\Model\CategoryCollection;
 use Vendic\VueStorefrontSitemap\Model\Configuration;
@@ -47,11 +49,23 @@ class GenerateSitemap
      */
     protected $categoryCollection;
     /**
-     * @var File
+     * @var StoreManagerInterface
      */
     protected $fileDriver;
 
+    /**
+     * @var StoreManagerInterface
+     */
+    protected $storeManager;
+
+    /**
+     * @var Emulation
+     */
+    protected $storeEmulation;
+
     public function __construct(
+        Emulation $storeEmulation,
+        StoreManagerInterface $storeManager,
         CategoryCollection $categoryCollection,
         Configuration $configuration,
         ProductCollection $productCollection,
@@ -64,30 +78,39 @@ class GenerateSitemap
         $this->productCollection = $productCollection;
         $this->configuration = $configuration;
         $this->categoryCollection = $categoryCollection;
-        $this->fileDriver = $fileDriver;        
+        $this->fileDriver = $fileDriver;
+        $this->storeManager = $storeManager;
+        $this->storeEmulation = $storeEmulation;
     }
 
     public function execute() : void
     {
-        // Collect settings
-        $domain = $this->configuration->getVueStorefrontUrl();
-        $path = $this->getPubPath();
+        foreach ($this->storeManager->getStores() as $store) {
+            $this->storeEmulation->startEnvironmentEmulation($store->getId(),\Magento\Framework\App\Area::AREA_FRONTEND, true);
+            // Collect settings
+            $domain = $this->configuration->getVueStorefrontUrl();
+            $path = $this->getPubPath();
 
         // Create directory at Path if doesn't exists
-        if (!$this->fileDriver->isDirectory($path)) $this->fileDriver->createDirectory($path, 0775);
-        
+        if (!$this->fileDriver->isDirectory($path)) {
+            $this->fileDriver->createDirectory($path, 0775);
+        }
+
         // Sitemap configuration
         $this->sitemap = $this->sitemapFactory->create($domain);
         $this->sitemap->setPath($path);
         $this->sitemap->setFilename('sitemap');
 
-        // Add data
-        $this->addHomepageToSitemap();
-        $this->addCategoriesToSitemap();
-        $this->addProductsToSitemap();
+            // Add data
+            $this->addHomepageToSitemap();
+            $this->addCategoriesToSitemap();
+            $this->addProductsToSitemap();
 
-        // Generate
-        $this->sitemap->createSitemapIndex($domain, 'Today');
+            // Generate
+            $this->sitemap->createSitemapIndex($domain, 'Today');
+
+            $this->storeEmulation->stopEnvironmentEmulation();
+        }
     }
 
     /**
