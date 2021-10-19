@@ -2,7 +2,6 @@
 [![Latest Stable Version](https://poser.pugx.org/vendic/magento2-vuestorefront-xmlsitemap/v/stable)](https://packagist.org/packages/vendic/magento2-vuestorefront-xmlsitemap)
 [![Latest Unstable Version](https://poser.pugx.org/vendic/magento2-vuestorefront-xmlsitemap/v/unstable)](https://packagist.org/packages/vendic/magento2-vuestorefront-xmlsitemap)
 [![License](https://poser.pugx.org/vendic/magento2-vuestorefront-xmlsitemap/license)](https://packagist.org/packages/vendic/magento2-vuestorefront-xmlsitemap)
-[![Build Status](https://travis-ci.org/Vendic/magento2-vuestorefront-xmlsitemap.svg?branch=master)](https://travis-ci.org/Vendic/magento2-vuestorefront-xmlsitemap)
 
 This modules generates a sitemap xml (via cron job, everyday at 00:00) for VueStorefront projects that are integrated with Magento 2. Also adds a cli command `bin/magento vsf:sitemap:generate` to manually generate a sitemap. VueStorefront uses a special url structure, based on Magento 2 data:
 
