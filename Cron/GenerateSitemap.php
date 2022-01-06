@@ -57,6 +57,7 @@ class GenerateSitemap
         ProductCollection $productCollection,
         DirectoryList $directoryList,
         SitemapFactory $sitemapFactory,
+        \Magento\Framework\App\Config\ScopeConfigInterface $appConfigScopeConfig,
         File $fileDriver
     ) {
         $this->directoryList = $directoryList;
@@ -64,7 +65,8 @@ class GenerateSitemap
         $this->productCollection = $productCollection;
         $this->configuration = $configuration;
         $this->categoryCollection = $categoryCollection;
-        $this->fileDriver = $fileDriver;        
+        $this->fileDriver = $fileDriver;
+        $this->getAppConfigScopeConfig = $appConfigScopeConfig;
     }
 
     public function execute() : void
@@ -87,7 +89,7 @@ class GenerateSitemap
         $this->addProductsToSitemap();
 
         // Generate
-        $this->sitemap->createSitemapIndex($domain, 'Today');
+        $this->sitemap->createSitemapIndex($domain . "/", 'Today');
     }
 
     /**
@@ -117,10 +119,11 @@ class GenerateSitemap
     protected function addProductsToSitemap(): void
     {
         $activeProducts = $this->getActiveProducts();
+        $productUrlSuffix = $this->getAppConfigScopeConfig->getValue('catalog/seo/product_url_suffix');
         if ($activeProducts->count() >= 1) {
             /** @var ProductInterface $product */
             foreach ($activeProducts->getItems() as $product) {
-                $productUrl = $this->generateProductSitemapUrl($product);
+                $productUrl = $this->generateProductSitemapUrl($product) . $productUrlSuffix;
                 $this->sitemap->addItem(
                     $productUrl,
                     1.0,
@@ -134,10 +137,11 @@ class GenerateSitemap
     protected function addCategoriesToSitemap(): void
     {
         $activeCategories = $this->getActiveCategories();
+        $categoryUrlSuffix = $this->getAppConfigScopeConfig->getValue('catalog/seo/category_url_suffix');
         if ($activeCategories->count() >= 1) {
             /** @var CategoryInterface $category */
             foreach ($activeCategories->getItems() as $category) {
-                $categoryUrl = $this->generateSitemapCategoryUrl($category);
+                $categoryUrl = $this->generateSitemapCategoryUrl($category) . $categoryUrlSuffix;
                 $this->sitemap->addItem(
                     $categoryUrl,
                     1.0,

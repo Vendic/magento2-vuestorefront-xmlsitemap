@@ -23,9 +23,9 @@ https://vuestorefronturl.com/urlkey
 
 ## Support
 
-Magento 2.2 | Magento 2.3
---- | :---:
-:white_check_mark: | :white_check_mark:
+Magento 2.2 | Magento 2.3 | Magento 2.4
+--- | :---: | :---:
+:white_check_mark: | :white_check_mark: | :white_check_mark:
 
 ## Installation
 ```
